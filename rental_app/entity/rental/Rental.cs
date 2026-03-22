@@ -14,6 +14,7 @@ public class Rental : AbstractRepo
 
     public Rental(DateTime startDate, DateTime endDate, long userId, long deviceId)
     {
+        Id = _idCounter++;
         StartDate = startDate;
         EndDate = endDate;
         UserId = userId;

@@ -1,4 +1,5 @@
 using rental_app.model;
+using rental_app.model.equipment;
 using rental_app.model.rental;
 using rental_app.model.user;
 using rental_app.repository;
@@ -29,8 +30,8 @@ public class RentalService
         if (rental == null)
         {
             throw new KeyNotFoundException($"Rental with {id} not found");
-        } 
-        
+        }
+
         return rental;
     }
 
@@ -41,20 +42,8 @@ public class RentalService
         {
             throw new KeyNotFoundException("User not found");
         }
-        
-        int activeRentals = _rentalRepo.GetNumOfActiveRentalsByUserId(userId);
 
-        if (user is Student && activeRentals >= MaxNumberOfRentalsForStudent)
-        {
-            throw new InvalidOperationException(
-                $"User reached limit of {MaxNumberOfRentalsForStudent} active rentals for students");
-        } 
-        
-        if (user is Employee && activeRentals >= MaxNumberOfRentalsForEmployee)
-        {
-            throw new InvalidOperationException(
-                $"User reached limit of {MaxNumberOfRentalsForEmployee} active rentals for employees");
-        }
+        ValidateUserNumbersRental(user);
 
         var device = _deviceRepo.GetById(deviceId);
         if (device == null)
@@ -62,20 +51,52 @@ public class RentalService
             throw new KeyNotFoundException("Device not found");
         }
 
+        ValidateDeviceStatus(device);
+
+        ValidateRangeOfStartAndEndDate(startDate, endDate);
+
+        ChangeDeviceStatus(device);
+
+        var rental = new Rental(startDate, endDate, userId, deviceId);
+        _rentalRepo.AddObject(rental);
+    }
+
+    private void ValidateUserNumbersRental(User user)
+    {
+        int activeRentals = _rentalRepo.GetNumOfActiveRentalsByUserId(user.Id);
+
+        if (user is Student && activeRentals >= MaxNumberOfRentalsForStudent)
+        {
+            throw new InvalidOperationException(
+                $"User reached limit of {MaxNumberOfRentalsForStudent} active rentals for students");
+        }
+
+        if (user is Employee && activeRentals >= MaxNumberOfRentalsForEmployee)
+        {
+            throw new InvalidOperationException(
+                $"User reached limit of {MaxNumberOfRentalsForEmployee} active rentals for employees");
+        }
+    }
+
+    private void ValidateDeviceStatus(Device device)
+    {
         if (device.Status != Status.Available)
         {
             throw new InvalidOperationException("Device is not available");
         }
+    }
 
+    private void ValidateRangeOfStartAndEndDate(DateTime startDate, DateTime endDate)
+    {
         if (startDate > endDate)
         {
             throw new InvalidOperationException("Start date of rental cannot be after end date");
         }
+    }
 
-        device.Status = Status.InUse;
-        
-        var rental = new Rental(startDate, endDate, userId, deviceId);
-        _rentalRepo.AddObject(rental);
+    private void ChangeDeviceStatus(Device device)
+    {
+        device.Status = device.Status == Status.Available ? Status.InUse : Status.Available;
     }
 
     public double ReturnRentalDevice(long rentalId)
@@ -92,13 +113,18 @@ public class RentalService
             throw new KeyNotFoundException("Device not found");
         }
 
-        device.Status = Status.Available;
+        ChangeDeviceStatus(device);
+        
+        return CalculatePenaltyForTheDelayRental(rental); 
+    }
 
-        var returnDate = new DateTime();
+    private double CalculatePenaltyForTheDelayRental(Rental rental)
+    {
+        var returnDate = DateTime.Now;
         if (returnDate > rental.EndDate)
         {
             var totalLateDays = (returnDate - rental.EndDate).TotalDays;
-            var penalty = totalLateDays * PenaltyForEachDayOfDelay;
+            var penalty = Math.Round(totalLateDays * PenaltyForEachDayOfDelay, 2);
             rental.IsReturnOnTime = false;
             rental.PenaltyToPay = penalty;
         }
