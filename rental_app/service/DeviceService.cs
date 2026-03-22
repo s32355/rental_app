@@ -55,9 +55,7 @@ public class DeviceService
 
     public Dictionary<long, Device> GetAvailableDevices()
     {
-        return _deviceRepo.GetObjects()
-            .Where(pair => pair.Value.Status == Status.Available)
-            .ToDictionary(pair => pair.Key, pair => pair.Value);
+        return _deviceRepo.GetAvailableDevices();
     }
 
     public void MarkDeviceAsUnavailable(long deviceId, Status status)
@@ -68,10 +66,6 @@ public class DeviceService
         }
 
         var device = GetDevice(deviceId);
-        if (device == null)
-        {
-            throw new KeyNotFoundException("Device not found");
-        }
 
         if (device.Status == Status.InUse)
         {

@@ -55,7 +55,7 @@ public class RentalService
 
         ValidateRangeOfStartAndEndDate(startDate, endDate);
 
-        ChangeDeviceStatus(device);
+        ChangeDeviceStatus(device, Status.InUse);
 
         var rental = new Rental(startDate, endDate, userId, deviceId);
         _rentalRepo.AddObject(rental);
@@ -94,9 +94,9 @@ public class RentalService
         }
     }
 
-    private void ChangeDeviceStatus(Device device)
+    private void ChangeDeviceStatus(Device device, Status status)
     {
-        device.Status = device.Status == Status.Available ? Status.InUse : Status.Available;
+        device.Status = status;
     }
 
     public double ReturnRentalDevice(long rentalId)
@@ -113,7 +113,7 @@ public class RentalService
             throw new KeyNotFoundException("Device not found");
         }
 
-        ChangeDeviceStatus(device);
+        ChangeDeviceStatus(device, Status.Available);
         
         return CalculatePenaltyForTheDelayRental(rental); 
     }
