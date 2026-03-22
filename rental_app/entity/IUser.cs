@@ -1,6 +1,6 @@
 namespace rental_app.model;
 
-public interface AbstractRepo
+public interface IUser
 {
     long Id { get; }
 }

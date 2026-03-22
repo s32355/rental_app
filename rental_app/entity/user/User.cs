@@ -1,6 +1,6 @@
 namespace rental_app.model.user;
 
-public abstract class User : AbstractRepo
+public abstract class User : IUser
 {
     private static long _idCounter = 0L;
 

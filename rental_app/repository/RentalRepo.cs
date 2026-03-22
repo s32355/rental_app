@@ -2,7 +2,7 @@ using rental_app.model.rental;
 
 namespace rental_app.repository;
 
-public class RentalRepo : IRepo<Rental>
+public class RentalRepo : AbstractRepo<Rental>
 {
     public int GetNumOfActiveRentalsByUserId(long userId)
     {

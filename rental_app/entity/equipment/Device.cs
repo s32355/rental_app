@@ -1,6 +1,6 @@
 namespace rental_app.model.equipment;
 
-public abstract class Device : AbstractRepo
+public abstract class Device : IUser
 {
     private static long _idCounter = 0L;
 

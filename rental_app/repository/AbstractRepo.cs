@@ -2,7 +2,7 @@ using rental_app.model;
 
 namespace rental_app.repository;
 
-public abstract class IRepo<T> where T : AbstractRepo
+public abstract class AbstractRepo<T> where T : IUser
 {
     protected Dictionary<long, T> _map = new Dictionary<long, T>();
 
