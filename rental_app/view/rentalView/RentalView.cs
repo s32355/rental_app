@@ -20,7 +20,7 @@ public class RentalView
 
         if (!long.TryParse(userIdInp, out var userId))
         {
-            Console.WriteLine("Wrong input");
+            Console.WriteLine("Wrong input\n");
             return;
         }
 
@@ -30,7 +30,7 @@ public class RentalView
 
         if (!long.TryParse(deviceIdInp, out var deviceId))
         {
-            Console.WriteLine("Wrong input");
+            Console.WriteLine("Wrong input\n");
             return;
         }
         
@@ -39,7 +39,7 @@ public class RentalView
 
         if (!int.TryParse(rentalDaysInp, out var rentalDays))
         {
-            Console.WriteLine("Wrong input");
+            Console.WriteLine("Wrong input\n");
             return;
         }
 
@@ -52,16 +52,16 @@ public class RentalView
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
             return;
         }
         catch (InvalidOperationException e )
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
             return;
         }
         
-        Console.WriteLine("Rental added successfully");
+        Console.WriteLine("Rental added successfully\n");
     }
 
     public void ReturnDeviceAndCloseRental()
@@ -72,12 +72,12 @@ public class RentalView
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
             return;
         }
         catch (InvalidOperationException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
 
         Console.Write("Enter rental id to return: ");
@@ -85,7 +85,7 @@ public class RentalView
 
         if (!long.TryParse(rentalIdInp, out var rentalId))
         {
-            Console.WriteLine("Wrong input");
+            Console.WriteLine("Wrong input\n");
             return;
         }
 
@@ -95,16 +95,17 @@ public class RentalView
             if (penaltyToPay > 0.0)
             {
                 Console.WriteLine($"Penalty for late return is {penaltyToPay}");
+                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("No penalty");
+                Console.WriteLine("No penalty\n");
             }
             
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
     }
 
@@ -116,6 +117,7 @@ public class RentalView
            {
                Console.WriteLine($"id: {rental.Id} - user name: {rental.UserObj.Name} - user surname: {rental.UserObj.Surname} - device: {rental.DeviceObj.Name}");
            }
+           Console.WriteLine();
     }
 
     public void ShowAllActiveRentalsForUser(Action showUsers)
@@ -127,7 +129,7 @@ public class RentalView
 
         if (!long.TryParse(userIdInp, out var userId))
         {
-            Console.WriteLine("Wrong input"); 
+            Console.WriteLine("Wrong input\n"); 
         }
 
         try
@@ -137,12 +139,14 @@ public class RentalView
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
         catch (InvalidOperationException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
+        
+        Console.WriteLine();
     }
 
     public void ShowOverdueRentals()
@@ -153,11 +157,13 @@ public class RentalView
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
         catch (InvalidOperationException e)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(e.Message + "\n");
         }
+        
+        Console.WriteLine();
     }
 }

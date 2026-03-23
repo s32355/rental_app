@@ -1,6 +1,7 @@
 using rental_app.service;
 using rental_app.view.deviceView;
 using rental_app.view.rentalView;
+using rental_app.view.reportView;
 using rental_app.view.userView;
 
 namespace rental_app.view;
@@ -10,12 +11,14 @@ public class MainView
     private readonly UserView _userView;
     private readonly DeviceView _deviceView;
     private readonly RentalView _rentalView;
+    private readonly ReportView _reportView;
     
-    public MainView(UserView userView, DeviceView deviceView, RentalView rentalView)
+    public MainView(UserView userView, DeviceView deviceView, RentalView rentalView, ReportView reportView)
     {
         _userView = userView;
         _deviceView = deviceView;
         _rentalView = rentalView;
+        _reportView = reportView;
     }
     
     public void Start()
@@ -27,6 +30,7 @@ public class MainView
             ShowMainMenu();
             Console.Write("Enter number (1-9) or type 'QQ': ");
             string input = Console.ReadLine();
+            Console.WriteLine();
 
             switch (input)
             {
@@ -57,6 +61,9 @@ public class MainView
                 case "9":
                     _rentalView.ShowOverdueRentals();
                     break;
+                case "10":
+                    _reportView.ShowReport();
+                    break;
                 case "QQ":
                     quitApp = false;
                     break;
@@ -75,6 +82,8 @@ public class MainView
         Console.WriteLine("7. Mark a device as unavailable, e.g. due to damage or servicing.");
         Console.WriteLine("8. Display active rentals for a given user.");
         Console.WriteLine("9. Display a list of overdue rentals.");
+        Console.WriteLine("10. Generate a summary report");
         Console.WriteLine("Type QQ for close the app");
+        Console.WriteLine();
     }
 }

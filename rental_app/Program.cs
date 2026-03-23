@@ -4,6 +4,7 @@ using rental_app.service;
 using rental_app.view;
 using rental_app.view.deviceView;
 using rental_app.view.rentalView;
+using rental_app.view.reportView;
 using rental_app.view.userView;
 
 var deviceRepo = new DeviceRepo();
@@ -13,6 +14,7 @@ var rentalRepo = new RentalRepo();
 var deviceService = new DeviceService(deviceRepo);
 var userService = new UserService(userRepo);
 var rentalService = new RentalService(rentalRepo, userRepo, deviceRepo);
+var reportService = new ReportService(deviceRepo, userRepo, rentalRepo);
 
 deviceService.AddCamera("Canon EOS R50", new DateOnly(2022, 3, 15), new DateOnly(2025, 3, 15), 24, 64);
 deviceService.AddCamera("Sony ZV-E10", new DateOnly(2023, 1, 10), new DateOnly(2026, 1, 10),  24, 128);
@@ -47,5 +49,6 @@ userService.AddStudent("Tomasz", "Lewandowski");
 var userView = new UserView(userService);
 var deviceView = new DeviceView(deviceService);
 var rentalView = new RentalView(rentalService);
+var reportView = new ReportView(reportService);
 
-new MainView(userView, deviceView, rentalView).Start();
+new MainView(userView, deviceView, rentalView, reportView).Start();

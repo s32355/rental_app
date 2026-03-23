@@ -22,6 +22,7 @@ public class DeviceView
         
         Console.Write("Enter number (1-3) or type 'QQ': ");
         string input = Console.ReadLine();
+        Console.WriteLine();
 
         switch (input)
         {
@@ -29,6 +30,7 @@ public class DeviceView
                 GetValuesFromUser(input);
                 break;
             case "QQ":
+                Console.WriteLine();
                 return;
             default:
                 Console.WriteLine("Wrong input!");
@@ -47,7 +49,7 @@ public class DeviceView
 
         if (!DateOnly.TryParse(purchaseDateInp, out var purchaseDate))
         {
-            Console.WriteLine("Invalid date format!");
+            Console.WriteLine("Invalid date format!\n");
             return;
         }
         
@@ -56,7 +58,7 @@ public class DeviceView
 
         if (!DateOnly.TryParse(expireDateInp, out var expireDate))
         {
-            Console.WriteLine("Invalid date format!");
+            Console.WriteLine("Invalid date format!\n");
             return;
         }
 
@@ -83,7 +85,7 @@ public class DeviceView
 
         if (!Double.TryParse(screenSizeInp, out var screenSize))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
@@ -92,12 +94,12 @@ public class DeviceView
 
         if (!int.TryParse(hardDriveCapacityInp, out var hardDriveCapacity))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
         _deviceService.AddLaptop(name,purchaseDate, warrantyExpireDate, screenSize, hardDriveCapacity);
-        Console.WriteLine("Laptop added successfully");
+        Console.WriteLine("Laptop added successfully\n");
     }
     
     private void GetValuesToCreateProjector(string name, DateOnly purchaseDate, DateOnly warrantyExpireDate)
@@ -107,7 +109,7 @@ public class DeviceView
 
         if (!int.TryParse(resolutionWidthInp, out var resolutionWidth))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
@@ -116,12 +118,12 @@ public class DeviceView
 
         if (!int.TryParse(resolutionHeightInp, out var resolutionHeight))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
         _deviceService.AddProjector(name,purchaseDate, warrantyExpireDate, resolutionWidth, resolutionHeight);
-        Console.WriteLine("Projector added successfully");
+        Console.WriteLine("Projector added successfully\n");
     }
     
     private void GetValuesToCreateCamera(string name, DateOnly purchaseDate, DateOnly warrantyExpireDate)
@@ -131,7 +133,7 @@ public class DeviceView
 
         if (!int.TryParse(resolutionMegapixelsInp, out var resolutionMegapixels))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
@@ -140,12 +142,12 @@ public class DeviceView
 
         if (!int.TryParse(storageCapacityInp, out var storageCapacity))
         {
-            Console.WriteLine("Invalid format!");
+            Console.WriteLine("Invalid format!\n");
             return;
         }
         
         _deviceService.AddCamera(name,purchaseDate, warrantyExpireDate, resolutionMegapixels, storageCapacity);
-        Console.WriteLine("Camera added successfully");
+        Console.WriteLine("Camera added successfully\n");
     }
 
     public void DisplayAllDevicesWithCurrentStatuses()
@@ -158,6 +160,7 @@ public class DeviceView
         {
             Console.WriteLine($"id: {device.Id} - name: {device.Name} - status: {device.Status}");
         }
+        Console.WriteLine();
     }
 
     public void ShowAvailableDevices()
@@ -169,6 +172,7 @@ public class DeviceView
         {
             Console.WriteLine($"id: {device.Id} - name: {device.Name}");
         }
+        Console.WriteLine();
     }
 
     public void MarkDeviceAsUnavailable()

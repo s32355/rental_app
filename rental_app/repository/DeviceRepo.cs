@@ -10,4 +10,14 @@ public class DeviceRepo : AbstractRepo<Device>
         return _map.Where(pair => pair.Value.Status == Status.Available)
             .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
+
+    public int GetTotalNumberOfDevices()
+    {
+        return _map.Count;
+    }
+
+    public int GetNumberOfAvailableDevices()
+    {
+        return GetAvailableDevices().Count;
+    }
 }

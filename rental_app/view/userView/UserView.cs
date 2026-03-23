@@ -19,6 +19,7 @@ public class UserView
         
         Console.Write("Choose one or type 'QQ': ");
         string input = Console.ReadLine();
+        Console.WriteLine();
 
         switch (input)
         {
@@ -53,6 +54,7 @@ public class UserView
 
         string type = input.Equals("1") ? "Employee" : "Student";
         Console.WriteLine($"Added new {type}");
+        Console.WriteLine();
     }
 
     public void ShowAllUsers()
@@ -64,5 +66,6 @@ public class UserView
         {
             Console.WriteLine($"id: {pair.Key} - name: {pair.Value.Name} - surname: {pair.Value.Surname}");
         }
+        Console.WriteLine();
     }
 }

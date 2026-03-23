@@ -6,7 +6,7 @@ public class RentalRepo : AbstractRepo<Rental>
 {
     public int GetNumOfActiveRentalsByUserId(long userId)
     {
-        return _map.Values.Where(rental => rental.UserId == userId && rental.IsReturnOnTime == null).Count();
+        return _map.Values.Where(rental => rental.UserId == userId && rental.IsReturnOnTime == null).ToList().Count;
     }
 
     public List<Rental> GetActiveRentalsByUserId(long userId)
@@ -23,5 +23,22 @@ public class RentalRepo : AbstractRepo<Rental>
     {
         var currentDayTime = new DateTime();
         return _map.Values.Where(rental => rental.EndDate <= currentDayTime && rental.IsReturnOnTime == null).ToList();
+    }
+
+    public double GetTotalPenaltyAmount()
+    {
+        var overdueRentals = GetTerminatedRentals();
+
+        return overdueRentals.Aggregate(0.0, (sum, rental) => sum + rental.PenaltyToPay);
+    }
+
+    public int GetNumberOfActiveRentals()
+    {
+        return GetActiveRentals().Count;
+    }
+
+    public int GetNumberOfTerminatedRentals()
+    {
+        return GetTerminatedRentals().Count;
     }
 }
