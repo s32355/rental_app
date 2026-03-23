@@ -14,6 +14,11 @@ public class RentalRepo : AbstractRepo<Rental>
         return _map.Values.Where(rental => rental.UserId == userId && rental.IsReturnOnTime == null).ToList();
     }
 
+    public List<Rental> GetActiveRentals()
+    {
+        return _map.Values.Where(rental => rental.IsReturnOnTime == null).ToList();
+    }
+
     public List<Rental> GetTerminatedRentals()
     {
         var currentDayTime = new DateTime();

@@ -35,4 +35,9 @@ public class UserService
 
         return user;
     }
+
+    public Dictionary<long, User> GetAllUsers()
+    {
+        return _userRepo.GetObjects();
+    }
 }

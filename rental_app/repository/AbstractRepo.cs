@@ -33,4 +33,9 @@ public abstract class AbstractRepo<T> where T : IUser
         _map.TryGetValue(id, out var obj);
         return obj;
     }
+
+    public bool CheckIfExists(long id)
+    {
+        return _map.ContainsKey(id);
+    }
 }

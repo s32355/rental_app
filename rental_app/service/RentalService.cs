@@ -136,13 +136,93 @@ public class RentalService
         return rental.PenaltyToPay;
     }
 
-    public List<Rental> GetActiveRentalsByUserId(long userId)
+    public List<RentalDTO> GetActiveRentalsByUserId(long userId)
     {
-        return _rentalRepo.GetActiveRentalsByUserId(userId);
+        if (!_userRepo.CheckIfExists(userId))
+        {
+            throw new KeyNotFoundException("User not found");
+        }
+
+        var user = _userRepo.GetById(userId);
+        var devices = _deviceRepo.GetObjects();
+        var rentals = _rentalRepo.GetActiveRentalsByUserId(userId);
+        if (rentals.Count == 0)
+        {
+            throw new InvalidOperationException("Nothing to Show");
+        }
+
+        var rentalsDto = new List<RentalDTO>();
+
+        foreach (var rental in rentals)
+        {
+            if (!devices.TryGetValue(rental.DeviceId, out var device))
+            {
+                throw new KeyNotFoundException("Device not found");
+            }
+            
+            rentalsDto.Add(new RentalDTO(rental.Id, user, device));
+        }
+        
+        return rentalsDto;
     }
 
-    public List<Rental> GetTerminatedRentals()
+    public List<RentalDTO> GetAllActiveRentalsDto()
     {
-        return _rentalRepo.GetTerminatedRentals();
+        var rentalsDto = new List<RentalDTO>();
+        var activeRentals = _rentalRepo.GetActiveRentals();
+        if (activeRentals.Count == 0)
+        {
+            throw new InvalidOperationException("Nothing to Show");
+        }
+        
+        var users = _userRepo.GetObjects();
+        var devices = _deviceRepo.GetObjects();
+
+        foreach (var rental in activeRentals)
+        {
+            if (!users.TryGetValue(rental.UserId, out var user))
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+
+            if (!devices.TryGetValue(rental.DeviceId, out var device))
+            {
+                throw new KeyNotFoundException("Device not found");
+            }
+            
+            rentalsDto.Add(new RentalDTO(rental.Id, user, device));
+        }
+        
+        return rentalsDto;
+    }
+
+    public List<RentalDTO> GetTerminatedRentals()
+    {
+        var rentalsDto = new List<RentalDTO>();
+        var rentals = _rentalRepo.GetTerminatedRentals();
+        if (rentals.Count == 0)
+        {
+            throw new InvalidOperationException("Nothing to Show");
+        }
+        
+        var users = _userRepo.GetObjects();
+        var devices = _deviceRepo.GetObjects();
+        
+        foreach (var rental in rentals)
+        {
+            if (!users.TryGetValue(rental.UserId, out var user))
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+
+            if (!devices.TryGetValue(rental.DeviceId, out var device))
+            {
+                throw new KeyNotFoundException("Device not found");
+            }
+            
+            rentalsDto.Add(new RentalDTO(rental.Id, user, device));
+        }
+        
+        return rentalsDto;
     }
 }
