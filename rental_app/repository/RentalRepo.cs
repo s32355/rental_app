@@ -23,7 +23,7 @@ public class RentalRepo : AbstractRepo<Rental>
 
     public List<Rental> GetTerminatedRentals()
     {
-        var currentDayTime = new DateTime();
+        var currentDayTime = DateTime.Now;
         return _map.Values.Where(rental => rental.EndDate <= currentDayTime && rental.IsReturnOnTime == null).ToList();
     }
 

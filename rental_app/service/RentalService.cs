@@ -101,10 +101,6 @@ public class RentalService
     public double ReturnRentalDevice(long rentalId)
     {
         var rental = GetRental(rentalId);
-        if (rental == null)
-        {
-            throw new KeyNotFoundException("Rental not found");
-        }
 
         var device = _deviceRepo.GetById(rental.DeviceId);
         if (device == null)
