@@ -1,3 +1,4 @@
+using System.Text.Json;
 using rental_app.entity;
 
 namespace rental_app.repository;
@@ -5,8 +6,15 @@ namespace rental_app.repository;
 public abstract class AbstractRepo<T> where T : IEntity
 {
     protected Dictionary<long, T> _map = new Dictionary<long, T>();
+    private readonly string _finalPath;
 
-    public void AddObject(T obj)
+    protected AbstractRepo(string finalPath)
+    {
+        _finalPath = finalPath;
+        LoadDataFromJson();
+    }
+
+public void AddObject(T obj)
     {
         _map.TryAdd(obj.Id, obj);
     }
@@ -37,5 +45,22 @@ public abstract class AbstractRepo<T> where T : IEntity
     public bool CheckIfExists(long id)
     {
         return _map.ContainsKey(id);
+    }
+
+    public void SaveDataToJson()
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(_finalPath)!);
+        File.WriteAllText(_finalPath,JsonSerializer.Serialize(_map));
+    }
+
+    private void LoadDataFromJson()
+    {
+        if (!File.Exists(_finalPath))
+        {
+            return;
+        }
+
+        _map = JsonSerializer.Deserialize<Dictionary<long, T>>(File.ReadAllText(_finalPath)) ??
+               new Dictionary<long, T>();
     }
 }

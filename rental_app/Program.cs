@@ -7,9 +7,9 @@ using rental_app.view.reportView;
 using rental_app.view.userView;
 
 // create repositories
-var deviceRepo = new DeviceRepo();
-var userRepo = new UserRepo();
-var rentalRepo = new RentalRepo();
+var deviceRepo = new DeviceRepo("../../../data/device.json");
+var userRepo = new UserRepo("../../../data/user.json");
+var rentalRepo = new RentalRepo("../../../data/rental.json");
 
 // create services
 var deviceService = new DeviceService(deviceRepo);
@@ -34,9 +34,20 @@ userService.AddStudent("Karolina", "Wójcik");
 userService.AddStudent("Tomasz", "Lewandowski");
 
 // Add two rentals for student
-rentalService.AddNewRental(4, 1, DateTime.Now, DateTime.Now.AddDays(2));
+try
+{
+    rentalService.AddNewRental(4, 1, DateTime.Now, DateTime.Now.AddDays(2));
 
-rentalService.AddNewRental(4, 2, DateTime.Now, DateTime.Now.AddDays(3));
+    rentalService.AddNewRental(4, 2, DateTime.Now, DateTime.Now.AddDays(3));
+} 
+catch (KeyNotFoundException e)
+{
+    Console.WriteLine(e.Message + "\n");
+}
+catch (InvalidOperationException e)
+{
+    Console.WriteLine(e.Message + "\n");
+}
 
 // Try to add third rental for student
 try
@@ -86,4 +97,13 @@ var deviceView = new DeviceView(deviceService);
 var rentalView = new RentalView(rentalService);
 var reportView = new ReportView(reportService);
 
-new MainView(userView, deviceView, rentalView, reportView).Start();
+try
+{
+    new MainView(userView, deviceView, rentalView, reportView).Start();
+}
+finally
+{
+    deviceRepo.SaveDataToJson();
+    userRepo.SaveDataToJson();
+    rentalRepo.SaveDataToJson();
+}

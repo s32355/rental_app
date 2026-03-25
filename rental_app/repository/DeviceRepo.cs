@@ -4,6 +4,8 @@ namespace rental_app.repository;
 
 public class DeviceRepo : AbstractRepo<Device>
 {
+    public DeviceRepo(string finalPath) : base(finalPath) {}
+
     public Dictionary<long, Device> GetAvailableDevices()
     {
         return _map.Where(pair => pair.Value.Status == Status.Available)

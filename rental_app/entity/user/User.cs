@@ -1,5 +1,9 @@
+using System.Text.Json.Serialization;
+
 namespace rental_app.entity.user;
 
+[JsonDerivedType(typeof(Employee), nameof(Employee))]
+[JsonDerivedType(typeof(Student), nameof(Student))]
 public abstract class User : IEntity
 {
     private static long _idCounter = 1L;

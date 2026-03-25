@@ -1,5 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace rental_app.entity.equipment;
 
+[JsonDerivedType(typeof(Camera), nameof(Camera))]
+[JsonDerivedType(typeof(Laptop), nameof(Laptop))]
+[JsonDerivedType(typeof(Projector), nameof(Projector))]
 public abstract class Device : IEntity
 {
     private static long _idCounter = 1L;
@@ -18,9 +23,4 @@ public abstract class Device : IEntity
         WarrantyExpireDate = warrantyExpireDate;
         Status = status;
     }
-    
-    
-    
-    
-    
 }

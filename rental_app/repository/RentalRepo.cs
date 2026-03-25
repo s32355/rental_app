@@ -4,6 +4,8 @@ namespace rental_app.repository;
 
 public class RentalRepo : AbstractRepo<Rental>
 {
+    public RentalRepo(string finalPath) : base(finalPath) {}
+    
     public int GetNumOfActiveRentalsByUserId(long userId)
     {
         return _map.Values.Where(rental => rental.UserId == userId && rental.IsReturnOnTime == null).ToList().Count;
