@@ -1,8 +1,8 @@
-namespace rental_app.model.user;
+namespace rental_app.entity.user;
 
-public abstract class User : IUser
+public abstract class User : IEntity
 {
-    private static long _idCounter = 0L;
+    private static long _idCounter = 1L;
 
     public long Id { get; init; }
     public string Name { get; set; }

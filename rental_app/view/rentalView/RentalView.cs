@@ -1,4 +1,4 @@
-using rental_app.model.rental;
+using rental_app.entity.rental;
 using rental_app.service;
 
 namespace rental_app.view.rentalView;

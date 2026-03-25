@@ -1,4 +1,4 @@
-using rental_app.model.report;
+using rental_app.entity.report;
 using rental_app.repository;
 
 namespace rental_app.service;

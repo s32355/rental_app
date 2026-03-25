@@ -1,5 +1,4 @@
-using rental_app.model;
-using rental_app.model.equipment;
+using rental_app.entity.equipment;
 using rental_app.service;
 
 namespace rental_app.view.deviceView;

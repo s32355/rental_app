@@ -1,4 +1,4 @@
-namespace rental_app.model.equipment;
+namespace rental_app.entity.equipment;
 
 public class Laptop : Device
 {

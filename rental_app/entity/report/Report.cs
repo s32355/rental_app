@@ -1,4 +1,4 @@
-namespace rental_app.model.report;
+namespace rental_app.entity.report;
 
 public class Report
 {

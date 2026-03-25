@@ -1,8 +1,8 @@
-using rental_app.model;
+using rental_app.entity;
 
 namespace rental_app.repository;
 
-public abstract class AbstractRepo<T> where T : IUser
+public abstract class AbstractRepo<T> where T : IEntity
 {
     protected Dictionary<long, T> _map = new Dictionary<long, T>();
 

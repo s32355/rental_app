@@ -1,7 +1,6 @@
-using rental_app.model;
-using rental_app.model.equipment;
-using rental_app.model.rental;
-using rental_app.model.user;
+using rental_app.entity.equipment;
+using rental_app.entity.rental;
+using rental_app.entity.user;
 using rental_app.repository;
 
 namespace rental_app.service;

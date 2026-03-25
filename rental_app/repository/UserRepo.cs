@@ -1,4 +1,4 @@
-using rental_app.model.user;
+using rental_app.entity.user;
 
 namespace rental_app.repository;
 

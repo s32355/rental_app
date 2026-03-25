@@ -1,8 +1,8 @@
-namespace rental_app.model.equipment;
+namespace rental_app.entity.equipment;
 
-public abstract class Device : IUser
+public abstract class Device : IEntity
 {
-    private static long _idCounter = 0L;
+    private static long _idCounter = 1L;
 
     public long Id { get; init; }
     public string Name { get; set; }

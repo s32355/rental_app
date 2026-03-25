@@ -1,4 +1,4 @@
-namespace rental_app.model;
+namespace rental_app.entity.equipment;
 
 public enum Status
 {

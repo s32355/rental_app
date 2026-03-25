@@ -1,5 +1,4 @@
-using rental_app.model;
-using rental_app.model.equipment;
+using rental_app.entity.equipment;
 
 namespace rental_app.repository;
 

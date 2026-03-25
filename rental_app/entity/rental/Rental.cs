@@ -1,8 +1,8 @@
-namespace rental_app.model.rental;
+namespace rental_app.entity.rental;
 
-public class Rental : IUser
+public class Rental : IEntity
 {
-    private static long _idCounter = 0L;
+    private static long _idCounter = 1L;
 
     public long Id { get; init; }
     public DateTime StartDate { get; }

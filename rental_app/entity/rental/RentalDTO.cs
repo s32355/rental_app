@@ -1,7 +1,7 @@
-using rental_app.model.equipment;
-using rental_app.model.user;
+using rental_app.entity.equipment;
+using rental_app.entity.user;
 
-namespace rental_app.model.rental;
+namespace rental_app.entity.rental;
 
 public class RentalDTO
 {

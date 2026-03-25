@@ -1,4 +1,4 @@
-namespace rental_app.model.user;
+namespace rental_app.entity.user;
 
 public class Employee : User
 {
